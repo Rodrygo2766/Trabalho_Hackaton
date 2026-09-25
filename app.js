@@ -1,4 +1,45 @@
-const API=(window.NEXA_CONFIG?.API_URL || localStorage.getItem('nexa_api_url') || 'http://localhost:3000/api/v1').replace(/\/$/,'');
+// 1. Inicializar o cliente do Supabase
+const SUPABASE_URL = 'okxtbwobzrcynkbepsab';
+const SUPABASE_KEY = 'sb_publishable_GuZo2REQ8fZ4UNf6XMCFKg_3SgXX-qo'; // Substitui pela tua Publishable Key
+
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// 2. Evento do formulário de cadastro
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Capturar os valores dos campos do formulário
+      const nome = document.querySelector('input[placeholder*="Nome"]')?.value || '';
+      const usuario = document.querySelector('input[placeholder*="Usuário"]')?.value || '';
+      const email = document.querySelector('input[placeholder*="E-mail"]')?.value || '';
+      const senha = document.querySelectorAll('input[type="password"]')[0]?.value || '';
+
+      // Guardar os dados diretamente no Supabase na tabela 'cadastro'
+      const { data, error } = await _supabase
+        .from('cadastro')
+        .insert([
+          {
+            nome: nome,
+            usuario: usuario,
+            email: email,
+            senha: senha
+          }
+        ]);
+
+      if (error) {
+        console.error('Erro ao cadastrar:', error.message);
+        alert('Erro ao criar conta: ' + error.message);
+      } else {
+        alert('Conta criada com sucesso!');
+        form.reset();
+      }
+    });
+  }
+});
 const app=document.querySelector('#app');
 const state={user:JSON.parse(localStorage.getItem('nexa_user')||'null'),token:localStorage.getItem('nexa_token'),view:'feed',feed:[],areas:[]};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -60,3 +101,27 @@ function setupAccessibility(){
   applyA11y();
 }
 setupAccessibility();
+
+// Garante que o cliente do Supabase está inicializado com a tua Publishable Key
+const SUPABASE_URL = 'https://okxtbwobzrcynkbepsab.supabase.co';
+const SUPABASE_KEY = 'SUA_PUBLISHABLE_KEY_AQUI'; // Chave Publishable/Anon do painel
+
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Na função de envio do formulário:
+const { data, error } = await _supabase
+  .from('cadastro')
+  .insert([
+    {
+      nome: nomeInput.value,
+      usuario: usuarioInput.value,
+      email: emailInput.value,
+      senha: senhaInput.value
+    }
+  ]);
+
+if (error) {
+  alert('Erro ao cadastrar: ' + error.message);
+} else {
+  alert('Conta criada com sucesso!');
+}
