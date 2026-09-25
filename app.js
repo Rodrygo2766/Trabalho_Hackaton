@@ -1,9 +1,9 @@
 // 1. Inicializar o cliente do Supabase
-const SUPABASE_URL = 'okxtbwobzrcynkbepsab';
-const SUPABASE_KEY = 'sb_publishable_GuZo2REQ8fZ4UNf6XMCFKg_3SgXX-qo'; // Substitui pela tua Publishable Key
+// Alterar o nome para evitar conflitos de declaração
+const MY_SUPABASE_URL = 'okxtbwobzrcynkbepsab';
+const MY_SUPABASE_KEY = 'sb_publishable_GuZo2REQ8fZ4UNf6XMCFKg_3SgXX-qo';
 
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+const _supabase = supabase.createClient(MY_SUPABASE_URL, MY_SUPABASE_KEY);
 // 2. Evento do formulário de cadastro
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
